@@ -2,6 +2,8 @@ from fastapi import APIRouter, HTTPException, Depends, status
 from typing import List
 from sqlalchemy.orm import Session
 from app.schemas.reservation import ReservationCreate, Reservation
+from app.models.user import User as UserModel
+from app.api.dependencies import get_current_user
 from app.operations.op_reservation import (
     create_reservation,
     get_reservation,
@@ -11,7 +13,9 @@ from app.operations.op_reservation import (
 )
 from app.db.database import get_db
 
-router = APIRouter()
+router = APIRouter(
+    dependencies=[Depends(get_current_user)],
+)
 
 
 @router.post("/", response_model=Reservation, status_code=status.HTTP_201_CREATED)

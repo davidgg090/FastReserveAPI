@@ -1,6 +1,8 @@
 from fastapi import APIRouter, HTTPException, Depends, status
 from typing import List
 from sqlalchemy.orm import Session
+
+from app.api.dependencies import get_current_user
 from app.schemas.table import TableCreate, Table
 from app.operations.op_table import (
     create_table,
@@ -11,7 +13,9 @@ from app.operations.op_table import (
 )
 from app.db.database import get_db
 
-router = APIRouter()
+router = APIRouter(
+    dependencies=[Depends(get_current_user)],
+)
 
 
 @router.post("/", response_model=Table, status_code=status.HTTP_201_CREATED)
