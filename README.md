@@ -23,7 +23,7 @@ Este proyecto es un sistema de reservaciones para restaurantes implementado con 
 1. Clona este repositorio:
     
     ```
-    git clone
+    git clone https://github.com/davidgg090/FastReserveAPI.git
     ```
 
 2. Instala las dependencias:
