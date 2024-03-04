@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, validates
 from app.db.database import Base
 
 
@@ -24,3 +24,9 @@ class Table(Base):
     location = Column(String)
 
     reservations = relationship("Reservation", back_populates="table")
+
+    @validates('capacity')
+    def validate_capacity(self, key, capacity):
+        if not isinstance(capacity, int) or capacity < 0:
+            raise ValueError("La capacidad debe ser un entero positivo")
+        return capacity
