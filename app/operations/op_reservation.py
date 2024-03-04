@@ -3,8 +3,8 @@ from app.models.reservation import Reservation as ReservationModel
 from app.schemas.reservation import ReservationCreate
 
 
-def create_reservation(db: Session, reservation: ReservationCreate) -> ReservationModel:
-    db_reservation = ReservationModel(**reservation.dict())
+def create_reservation(db: Session, reservation: ReservationCreate, user_id: int) -> ReservationModel:
+    db_reservation = ReservationModel(**reservation.dict(), user_id=user_id)
     db.add(db_reservation)
     db.commit()
     db.refresh(db_reservation)

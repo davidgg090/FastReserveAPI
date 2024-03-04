@@ -19,8 +19,9 @@ router = APIRouter(
 
 
 @router.post("/", response_model=Reservation, status_code=status.HTTP_201_CREATED)
-def create_reservation_endpoint(reservation: ReservationCreate, db: Session = Depends(get_db)):
-    return create_reservation(db=db, reservation=reservation)
+def create_reservation_endpoint(reservation: ReservationCreate, db: Session = Depends(get_db),
+                                current_user: UserModel = Depends(get_current_user)):
+    return create_reservation(db=db, reservation=reservation, user_id=current_user.id)
 
 
 @router.get("/", response_model=List[Reservation])
